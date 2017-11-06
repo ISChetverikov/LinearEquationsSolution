@@ -4,18 +4,25 @@
 #include <string.h>
 #include "fractions.h"
 
+// Константа, задающая длину строки при чтении с файла
+// Должна быть больше, чем количество символов в любой строке файла
+#define READ_BUFFER_LENGHT 80
+
 int main() {
 	fraction ** sleMatrix = NULL;
-	fraction * matrixRow = NULL;
+	fraction * tempRow = NULL;
+
 	FILE * pFile = NULL;
 	char * filename = "in.txt";
-	char readStr[80];
+	char readStr[READ_BUFFER_LENGHT];
 	char * pResultStr;
+
 	int n = 0, m = 0, previous_n = -1;
 
 	setlocale(LC_CTYPE, "Russian");
-	printf_s("Программа решения СЛУ\n");
+	printf_s("Программа решения СЛУ методом Гаусса\n");
 
+	// Чтение входного файла
     fopen_s(&pFile, filename, "r");
 	if (pFile == NULL) {
 		printf_s("Ошибка чтения файла %s\n", filename);
@@ -24,31 +31,38 @@ int main() {
 	printf_s("Файл %s успешно открыт\n", filename);
 
 	sleMatrix = calloc(0, sizeof(fraction *));
+
+	// Построчное чтение файла
 	pResultStr = fgets(readStr, sizeof(readStr), pFile);
 	while (pResultStr != NULL)
 	{
-		n = parseFractions(readStr, &matrixRow);
+		n = parseFractions(readStr, &tempRow);
 		
+		if (n == -1) {
+			printf_s("Ошибка чтения дробей в строке %d\n", m+1);
+			return;
+		}
 		if (n != previous_n && previous_n != -1)
 		{
-			printf_s("Количество элементов в строках различается!\n");
+			printf_s("Количество элементов в строке %d отличается от предыдущего!\n", m+1);
 			return;
 		}
 
-	    
+		// Увеличиваем двумерный массив дробей на одну строку
 		sleMatrix = realloc(sleMatrix, sizeof(fraction *) *(m + 1));
 		sleMatrix[m] = calloc(n, sizeof(fraction));
 		for (int i = 0; i < n; i++)
 		{
-			sleMatrix[m][i] = matrixRow[i];
+			sleMatrix[m][i] = tempRow[i];
 		}
-		free(matrixRow);
+		free(tempRow);
 
 		m++;
 		previous_n = n;
 		pResultStr = fgets(readStr, sizeof(readStr), pFile);
-	} ;
+	}
 	
+	// Вывод на матрицы на экран
 	for (int i = 0; i < m; i++) {
 		for (int j = 0; j < n; j++) {
 			printFraction(sleMatrix[i][j]);
@@ -66,6 +80,7 @@ int main() {
 
 	printf_s("\n");
 
+	// Очистка памяти
 	for (int i = 0; i < m; i++) {
 		free(sleMatrix[i]);
 	}
