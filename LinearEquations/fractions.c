@@ -13,9 +13,11 @@ void printFraction(fraction operand) {
 	return;
 }
 
-int parseFraction(char * str, fraction ** pArr) {
+// Сначала разбиваем строку пробелом, затем каждый кусок разбиваем "/"
+// и пытаемся найти числитель и знаменатель
+int parseFractions(char * str, fraction ** pArr) {
+	fraction tempArr[FRACTIONS_ARRAY_MAX_LENGTH];
 
-	fraction tempArr[80];
 	char * tokenOut, * lastOut;
 	char * tokenIn, * lastIn;
 	
@@ -39,8 +41,8 @@ int parseFraction(char * str, fraction ** pArr) {
 			denom = 1;
 		else {
 			denom = atoi(tokenIn);
-			if (denom == 0)
-				return -1;
+			if (denom == 0) // Знаменатель не обнаружен или равен нулю
+				return -1; 
 		}
 		
 		tempArr[count].numerator = num;
@@ -56,7 +58,7 @@ int parseFraction(char * str, fraction ** pArr) {
 	return count;
 }
 
-fraction add(fraction left, fraction right) {
+fraction addition(fraction left, fraction right) {
 	fraction f;
 	f.numerator = left.numerator * right.denominator +
 		right.numerator * left.denominator;
@@ -65,7 +67,7 @@ fraction add(fraction left, fraction right) {
 	return f;
 }
 
-fraction sub(fraction left, fraction right) {
+fraction substraction(fraction left, fraction right) {
 	fraction f;
 	f.numerator = left.numerator * right.denominator -
 		right.numerator * left.denominator;
@@ -74,7 +76,7 @@ fraction sub(fraction left, fraction right) {
 	return f;
 }
 
-fraction mult(fraction left, fraction right) {
+fraction multiplication(fraction left, fraction right) {
 	fraction f;
 	f.numerator = left.numerator * right.numerator;
 	f.denominator = left.denominator * right.denominator;
@@ -82,7 +84,7 @@ fraction mult(fraction left, fraction right) {
 	return f;
 }
 
-fraction divFraction(fraction left, fraction right) {
+fraction division(fraction left, fraction right) {
 	fraction f;
 	f.numerator = left.numerator * right.denominator;
 	f.denominator = left.denominator * right.numerator;
@@ -98,6 +100,7 @@ fraction reverse(fraction operand) {
 	return f;
 }
 
+// Нахождение наибольшего общего делителя
 int gcd(int a, int b) {
 	return b == 0 ? a : gcd(b, a % b); 
 }
@@ -117,4 +120,9 @@ void reduce(fraction * operand) {
 	return;
 }
 
+char isZero(fraction operand) {
+	if (operand.numerator == 0)
+		return 1;
+	return 0;
+}
 

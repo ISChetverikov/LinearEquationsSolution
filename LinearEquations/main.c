@@ -4,14 +4,6 @@
 #include <string.h>
 #include "fractions.h"
 
-int addMatrixRow(fraction ** Matrix, int m, int n, fraction * row) {
-	
-	
-
-	
-	return 0;
-}
-
 int main() {
 	fraction ** sleMatrix = NULL;
 	fraction * matrixRow = NULL;
@@ -35,7 +27,7 @@ int main() {
 	pResultStr = fgets(readStr, sizeof(readStr), pFile);
 	while (pResultStr != NULL)
 	{
-		n = parseFraction(readStr, &matrixRow);
+		n = parseFractions(readStr, &matrixRow);
 		
 		if (n != previous_n && previous_n != -1)
 		{
@@ -64,10 +56,6 @@ int main() {
 		}
 		printf_s("\n");
 	}
-
-	fraction f = divFraction(sleMatrix[0][1], sleMatrix[0][1]);
-	reduce(&f);
-	printFraction(f);
 
 	// Проверяем, дошло ли чтение до конца файла
 	if (feof(pFile) == 0) 
