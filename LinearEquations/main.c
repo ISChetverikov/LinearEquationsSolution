@@ -65,6 +65,10 @@ int main() {
 		printf_s("\n");
 	}
 
+	fraction f = divFraction(sleMatrix[0][1], sleMatrix[0][1]);
+	reduce(&f);
+	printFraction(f);
+
 	// Проверяем, дошло ли чтение до конца файла
 	if (feof(pFile) == 0) 
 	{

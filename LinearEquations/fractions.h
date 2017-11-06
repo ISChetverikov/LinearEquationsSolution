@@ -7,11 +7,11 @@ typedef struct rational_fraction {
 
 void printFraction(fraction operand);
 int parseFraction(char * str, fraction ** arr);
-//fraction add(fraction left, fraction right);
-//fraction sub(fraction left, fraction right);
-//fraction mult(fraction left, fraction right);
-//fraction div(fraction left, fraction right);
-//fraction reverse(fraction operand);
+fraction add(fraction left, fraction right);
+fraction sub(fraction left, fraction right);
+fraction mult(fraction left, fraction right);
+fraction divFraction(fraction left, fraction right);
+fraction reverse(fraction operand);
 //
 //void reduce(fraction * operand);
 //

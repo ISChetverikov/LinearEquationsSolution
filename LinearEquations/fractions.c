@@ -56,14 +56,65 @@ int parseFraction(char * str, fraction ** pArr) {
 	return count;
 }
 
-//fraction add(fraction left, fraction right) {
-//
-//}
-//fraction sub(fraction left, fraction right);
-//fraction mult(fraction left, fraction right);
-//fraction div(fraction left, fraction right);
-//fraction reverse(fraction operand);
-//
-//void reduce(fraction * operand);
-//
-//
+fraction add(fraction left, fraction right) {
+	fraction f;
+	f.numerator = left.numerator * right.denominator +
+		right.numerator * left.denominator;
+	f.denominator = left.denominator * right.denominator;
+
+	return f;
+}
+
+fraction sub(fraction left, fraction right) {
+	fraction f;
+	f.numerator = left.numerator * right.denominator -
+		right.numerator * left.denominator;
+	f.denominator = left.denominator * right.denominator;
+
+	return f;
+}
+
+fraction mult(fraction left, fraction right) {
+	fraction f;
+	f.numerator = left.numerator * right.numerator;
+	f.denominator = left.denominator * right.denominator;
+
+	return f;
+}
+
+fraction divFraction(fraction left, fraction right) {
+	fraction f;
+	f.numerator = left.numerator * right.denominator;
+	f.denominator = left.denominator * right.numerator;
+
+	return f;
+}
+
+fraction reverse(fraction operand) {
+	fraction f;
+	f.numerator = operand.denominator;
+	f.denominator = operand.numerator;
+
+	return f;
+}
+
+int gcd(int a, int b) {
+	return b == 0 ? a : gcd(b, a % b); 
+}
+
+void reduce(fraction * operand) {
+	int gcd = 0;
+
+	if (operand->numerator == 0) {
+		operand->denominator = 1;
+		return;
+	}
+
+	gcd = (operand->numerator, operand->denominator);
+	operand->numerator /= gcd;
+	operand->denominator /= gcd;
+	
+	return;
+}
+
+
