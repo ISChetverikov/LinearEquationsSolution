@@ -1,13 +1,10 @@
 #pragma once
 
-
-
 typedef struct rational_fraction {
 	int numerator;
 	int denominator;
 } fraction;
 
-int create(int numerator, int denominator, fraction * f);
 void printFraction(fraction operand);
 int parseFraction(char * str, fraction ** arr);
 //fraction add(fraction left, fraction right);

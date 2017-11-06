@@ -3,17 +3,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Нам это не нужно
-int create(int numerator, int denominator, fraction * f) {
-	if (denominator == 0)
-		return 0;
-
-	f->numerator = numerator;
-	f->denominator = denominator;
-	
-	return 1;
-}
-
 void printFraction(fraction operand) {
 	if (operand.denominator == 1) {
 		printf_s("%d", operand.numerator);
@@ -21,19 +10,9 @@ void printFraction(fraction operand) {
 	}
 
 	printf_s("%d/%d", operand.numerator, operand.denominator);
+	return;
 }
 
-//fraction add(fraction left, fraction right) {
-//
-//}
-//fraction sub(fraction left, fraction right);
-//fraction mult(fraction left, fraction right);
-//fraction div(fraction left, fraction right);
-//fraction reverse(fraction operand);
-//
-//void reduce(fraction * operand);
-//
-//
 int parseFraction(char * str, fraction ** pArr) {
 
 	fraction tempArr[80];
@@ -76,3 +55,15 @@ int parseFraction(char * str, fraction ** pArr) {
 
 	return count;
 }
+
+//fraction add(fraction left, fraction right) {
+//
+//}
+//fraction sub(fraction left, fraction right);
+//fraction mult(fraction left, fraction right);
+//fraction div(fraction left, fraction right);
+//fraction reverse(fraction operand);
+//
+//void reduce(fraction * operand);
+//
+//
