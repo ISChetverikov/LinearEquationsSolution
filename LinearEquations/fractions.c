@@ -116,6 +116,11 @@ void reduce(fraction * operand) {
 		return;
 	}
 
+	if (operand->denominator < 0) {
+		operand->numerator = -operand->numerator;
+		operand->denominator = -operand->denominator;
+	}
+
 	gcd = getGcd(operand->numerator, operand->denominator);
 	operand->numerator /= gcd;
 	operand->denominator /= gcd;
