@@ -118,10 +118,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="fractions.c" />
+    <ClCompile Include="gauss.c" />
     <ClCompile Include="main.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fractions.h" />
+    <ClInclude Include="gauss.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="in.txt" />

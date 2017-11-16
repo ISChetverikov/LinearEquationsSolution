@@ -3,6 +3,7 @@
 #include <locale.h>
 #include <string.h>
 #include "fractions.h"
+#include "gauss.h"
 
 // Константа, задающая длину строки при чтении с файла
 // Должна быть больше, чем количество символов в любой строке файла
@@ -36,7 +37,7 @@ int main() {
 	pResultStr = fgets(readStr, sizeof(readStr), pFile);
 	while (pResultStr != NULL)
 	{
-		n = parseFractions(readStr, &tempRow);
+		n = parseFractions(readStr, &tempRow); // Посмотреть если после числа стоит пробел или несколько
 		
 		if (n == -1) {
 			printf_s("Ошибка чтения дробей в строке %d\n", m+1);
@@ -62,6 +63,18 @@ int main() {
 		pResultStr = fgets(readStr, sizeof(readStr), pFile);
 	}
 	
+	// Вывод на матрицы на экран
+	for (int i = 0; i < m; i++) {
+		for (int j = 0; j < n; j++) {
+			printFraction(sleMatrix[i][j]);
+			printf_s(" ");
+		}
+		printf_s("\n");
+	}
+
+	printf_s("\n=======================\n\n");
+	solveSle(sleMatrix, m, n);
+	printf_s("\n=======================\n\n");
 	// Вывод на матрицы на экран
 	for (int i = 0; i < m; i++) {
 		for (int j = 0; j < n; j++) {

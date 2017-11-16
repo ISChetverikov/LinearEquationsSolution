@@ -29,12 +29,11 @@ int parseFractions(char * str, fraction ** pArr) {
 	while (tokenOut != NULL)
 	{
 		tokenIn = strtok_s(tokenOut, "/", &lastIn);
-		if (tokenIn == NULL)
+		if (tokenIn == NULL) {
+			tokenOut = strtok_s(NULL, " ", &lastOut);
 			continue;
-
+		}
 		num = atoi(tokenIn);
-		if (num == 0)
-			continue;
 
 		tokenIn = strtok_s(NULL, "/", &lastIn);
 		if (tokenIn == NULL)
@@ -63,6 +62,7 @@ fraction addition(fraction left, fraction right) {
 	f.numerator = left.numerator * right.denominator +
 		right.numerator * left.denominator;
 	f.denominator = left.denominator * right.denominator;
+	reduce(&f);
 
 	return f;
 }
@@ -72,6 +72,7 @@ fraction substraction(fraction left, fraction right) {
 	f.numerator = left.numerator * right.denominator -
 		right.numerator * left.denominator;
 	f.denominator = left.denominator * right.denominator;
+	reduce(&f);
 
 	return f;
 }
@@ -80,6 +81,7 @@ fraction multiplication(fraction left, fraction right) {
 	fraction f;
 	f.numerator = left.numerator * right.numerator;
 	f.denominator = left.denominator * right.denominator;
+	reduce(&f);
 
 	return f;
 }
@@ -88,6 +90,7 @@ fraction division(fraction left, fraction right) {
 	fraction f;
 	f.numerator = left.numerator * right.denominator;
 	f.denominator = left.denominator * right.numerator;
+	reduce(&f);
 
 	return f;
 }
@@ -101,8 +104,8 @@ fraction reverse(fraction operand) {
 }
 
 // Ќахождение наибольшего общего делител€
-int gcd(int a, int b) {
-	return b == 0 ? a : gcd(b, a % b); 
+int getGcd(int a, int b) {
+	return b == 0 ? a : getGcd(b, a % b); 
 }
 
 void reduce(fraction * operand) {
@@ -113,7 +116,7 @@ void reduce(fraction * operand) {
 		return;
 	}
 
-	gcd = (operand->numerator, operand->denominator);
+	gcd = getGcd(operand->numerator, operand->denominator);
 	operand->numerator /= gcd;
 	operand->denominator /= gcd;
 	

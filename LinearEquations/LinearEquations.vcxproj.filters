@@ -21,9 +21,15 @@
     <ClCompile Include="fractions.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="gauss.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fractions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gauss.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
