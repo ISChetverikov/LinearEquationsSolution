@@ -1,9 +1,8 @@
 #include "fractions.h"
+#include "gauss.h"
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
-
-#define TEXT_LENGTH 80
 
 fraction * solveSle(fraction ** matrix, int m, int n, char ** outputText) {
 
@@ -13,19 +12,20 @@ fraction * solveSle(fraction ** matrix, int m, int n, char ** outputText) {
 	fraction bomb;
 	fraction reverseBomb;
 
+	int temp_index = 0;
 	int current_rank = 0;
-	fraction deleted = {0,1};
+	fraction deleted = createFraction(0, 1);
 
 	char isRowNull = 0;
 
 	for (int j = 0; j < n - 1; j++)
 	{
+		// Поиск первого ненулевого элемента, которым можно занулить столбец
 		bomb = createFraction(0,1);
 
-		int index = 0;
-		for (index = current_rank; index < m; index++) {
-			if (!isZero(matrix[index][j])){
-				bomb = matrix[index][j];
+		for (temp_index = current_rank; temp_index < m; temp_index++) {
+			if (!isZero(matrix[temp_index][j])){
+				bomb = matrix[temp_index][j];
 			    break;
 		    }
 		}
@@ -33,8 +33,8 @@ fraction * solveSle(fraction ** matrix, int m, int n, char ** outputText) {
 			continue;
 
 		// Поднятие строки вверх
-		tempRow = matrix[index];
-		matrix[index] = matrix[current_rank];
+		tempRow = matrix[temp_index];
+		matrix[temp_index] = matrix[current_rank];
 		matrix[current_rank] = tempRow;
 		
 		reverseBomb = reverse(bomb);
@@ -44,6 +44,7 @@ fraction * solveSle(fraction ** matrix, int m, int n, char ** outputText) {
 			matrix[current_rank][k] = multiplication(matrix[current_rank][k], reverseBomb);
 		}
 
+		// Обнуление строк
 		for (int i = 0; i < m; i++) {
 			if (i == current_rank)
 				continue;
@@ -59,10 +60,11 @@ fraction * solveSle(fraction ** matrix, int m, int n, char ** outputText) {
 	}
 	
 	*outputText = calloc(TEXT_LENGTH, sizeof(char));
+	// Если матрица не подходит под нижеследующие случаи, то система неопределена
 	sprintf_s(*outputText, TEXT_LENGTH,
 		"Система неопределена. Ранг основной матрицы системы: %d", current_rank);
 
-	// Если ранг матрицы равен количеству переменных, то в результат помешаем единственное решение
+	// Если ранг основной матрицы равен количеству переменных, то в результат помешаем единственное решение
 	if (current_rank == n - 1) {
 		strcpy_s(*outputText, TEXT_LENGTH,"Система имеет единственое решение.");
 		result = calloc(n - 1, sizeof(fraction));
@@ -71,6 +73,7 @@ fraction * solveSle(fraction ** matrix, int m, int n, char ** outputText) {
 			result[i] = matrix[i][n - 1];
 		}
 	}
+	// Если есть строка с нулевыми коэффициентами и ненулевым свободным членом, то нет решений
 	else {
 		for (int i = m - 1; i >= 0; i--)
 		{

@@ -101,12 +101,15 @@ int main() {
 		for (int i = 0; i < m; i++)
 		{
 			printFraction(tempRow[i]);
+			printf_s("\t");
 		}
 		printf_s("\n");
 	}
 	printf_s("\n");
 
 	// Очистка памяти
+	free(tempRow);
+	free(solutionText);
 	for (int i = 0; i < m; i++) {
 		free(sleMatrix[i]);
 	}
