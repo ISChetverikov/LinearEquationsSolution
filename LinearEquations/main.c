@@ -72,16 +72,28 @@ int main() {
 	}
 
 	// Вывод на матрицы на экран
+	printf_s("Входная расширенная матрица:\n\n");
 	for (int i = 0; i < m; i++) {
 		for (int j = 0; j < n; j++) {
 			printFraction(sleMatrix[i][j]);
-			printf_s(" ");
+			printf_s("\t");
 		}
 		printf_s("\n");
 	}
 
 	printf_s("\n=======================\n\n");
 	tempRow = solveSle(sleMatrix, m, n, &solutionText);
+
+	//Вывод матрицы на экран
+	printf_s("Эквивалентная специальная ступенчатая матрица:\n\n");
+	for (int i = 0; i < m; i++) {
+		for (int j = 0; j < n; j++) {
+			printFraction(sleMatrix[i][j]);
+			printf_s("\t");
+		}
+		printf_s("\n");
+	}
+
 	printf_s("\n=======================\n\n");
 
 	printf_s("%s\n", solutionText);

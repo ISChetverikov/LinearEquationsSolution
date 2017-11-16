@@ -37,13 +37,13 @@ int parseFractions(char * str, fraction ** pArr) {
 	int count = 0;
 	int num = 0, denom = 0;
 
-	tokenOut = strtok_s(str, " ", &lastOut);
+	tokenOut = strtok_s(str, " \n", &lastOut);
 
 	while (tokenOut != NULL)
 	{
 		tokenIn = strtok_s(tokenOut, "/", &lastIn);
 		if (tokenIn == NULL) {
-			tokenOut = strtok_s(NULL, " ", &lastOut);
+			tokenOut = strtok_s(NULL, " \n", &lastOut);
 			continue;
 		}
 		num = atoi(tokenIn);
@@ -61,7 +61,7 @@ int parseFractions(char * str, fraction ** pArr) {
 		tempArr[count].denominator = denom;
 		++count;
 
-		tokenOut = strtok_s(NULL, " ", &lastOut);
+		tokenOut = strtok_s(NULL, " \n", &lastOut);
 	}
 
 	*pArr = calloc(count, sizeof(fraction));
