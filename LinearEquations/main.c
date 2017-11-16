@@ -98,6 +98,7 @@ int main() {
 
 	printf_s("%s\n", solutionText);
 	if (tempRow != NULL) {
+		printf_s("Решение:\n");
 		for (int i = 0; i < m; i++)
 		{
 			printFraction(tempRow[i]);
