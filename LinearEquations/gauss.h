@@ -1,3 +1,3 @@
 #pragma once
 
-fraction * solveSle(fraction ** matrix, int m, int n);
+fraction * solveSle(fraction ** matrix, int m, int n, char ** text);

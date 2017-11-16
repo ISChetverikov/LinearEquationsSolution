@@ -3,11 +3,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-fraction * solveSle(fraction ** matrix, int m, int n) {
-	char * solutionText = "";
+#define TEXT_LENGTH 80
+
+fraction * solveSle(fraction ** matrix, int m, int n, char ** outputText) {
 
 	fraction ** tempMatrix;
 	fraction * tempRow;
+	fraction * result = NULL;
 
 	fraction bomb;
 	fraction reverseBomb;
@@ -15,7 +17,7 @@ fraction * solveSle(fraction ** matrix, int m, int n) {
 	int current_rank = 0;
 	fraction deleted = {0,1};
 
-	char flag = 0;
+	char isRowNull = 0;
 
 	// Копирование массива
 	tempMatrix = calloc(m, sizeof(fraction *));
@@ -48,16 +50,7 @@ fraction * solveSle(fraction ** matrix, int m, int n) {
 		tempMatrix[current_rank] = tempRow;
 		
 		reverseBomb = reverse(bomb);
-
-		/*for (int i = 0; i < m; i++) {
-			for (int j = 0; j < n; j++) {
-				printFraction(tempMatrix[i][j]);
-				printf_s(" ");
-			}
-			printf_s("\n");
-		}
-		printf_s("--------------\n");*/
-
+		
 		// Умножение строки на обратный элемент
 		for (int k = j; k < n; k++) {
 			tempMatrix[current_rank][k] = multiplication(tempMatrix[current_rank][k], reverseBomb);
@@ -77,28 +70,47 @@ fraction * solveSle(fraction ** matrix, int m, int n) {
 		current_rank++;
 	}
 	
-	if (current_rank == n - 1) {
-		solutionText = "Система имеет единственое решение.";
-	}
-	else {
-		for (int i = m; i >= 0; i--)
-		{
-			flag = 0;
-			for (int j = 0; j < n - 1; j++)
-			{
-				if (!isZero(tempMatrix[i][j]))
-					break;
-				flag = 1;
-			}
-			if (flag == 0) break;
+	for (int i = 0; i < m; i++) {
+		for (int j = 0; j < n; j++) {
+			printFraction(tempMatrix[i][j]);
+			printf_s(" ");
+		}
+			printf_s("\n");
+		}
+	printf_s("--------------\n");
 
-			if (!isZero(tempMatrix[i][n - 1]))
-				solutionText = "Системе несовместна.";
-			else
-				solutionText = "Система неопределена.";
+	*outputText = calloc(TEXT_LENGTH, sizeof(char));//Вынести в константу
+	sprintf_s(*outputText, TEXT_LENGTH, "Система неопределена. Ранг системы: %d", current_rank);
+
+	// Если ранг матрицы равен количеству переменных, то в результат помешаем единственное решение
+	if (current_rank == n - 1) {
+		strcpy_s(*outputText, TEXT_LENGTH,"Система имеет единственое решение.");
+		result = calloc(n - 1, sizeof(fraction));
+		for (int i = 0; i < m; i++)
+		{
+			result[i] = tempMatrix[i][n - 1];
 		}
 	}
+	else {
+		for (int i = m - 1; i >= 0; i--)
+		{
+			isRowNull = 1;
+			for (int j = 0; j < n - 1; j++)
+			{
+				if (!isZero(tempMatrix[i][j])) {
+					isRowNull = 0;
+					break;
+				}
+			}
+			if (!isRowNull) 
+				break;
 
+			if (!isZero(tempMatrix[i][n - 1])) { 
+				strcpy_s(*outputText, TEXT_LENGTH, "Система несовместна.");
+				break;
+			}				
+		}
+	}
 
 	// Очистка массива
 	for (int i = 0; i < m; i++)
@@ -106,4 +118,6 @@ fraction * solveSle(fraction ** matrix, int m, int n) {
 		free(tempMatrix[i]);
 	}
 	free(tempMatrix);
+
+	return result;
 }

@@ -17,6 +17,7 @@ int main() {
 	char * filename = "in.txt";
 	char readStr[READ_BUFFER_LENGHT];
 	char * pResultStr;
+	char * solutionText;
 
 	int n = 0, m = 0, previous_n = -1;
 
@@ -63,34 +64,34 @@ int main() {
 		pResultStr = fgets(readStr, sizeof(readStr), pFile);
 	}
 	
-	// Вывод на матрицы на экран
-	for (int i = 0; i < m; i++) {
-		for (int j = 0; j < n; j++) {
-			printFraction(sleMatrix[i][j]);
-			printf_s(" ");
-		}
-		printf_s("\n");
-	}
-
-	printf_s("\n=======================\n\n");
-	solveSle(sleMatrix, m, n);
-	printf_s("\n=======================\n\n");
-	// Вывод на матрицы на экран
-	for (int i = 0; i < m; i++) {
-		for (int j = 0; j < n; j++) {
-			printFraction(sleMatrix[i][j]);
-			printf_s(" ");
-		}
-		printf_s("\n");
-	}
-
 	// Проверяем, дошло ли чтение до конца файла
-	if (feof(pFile) == 0) 
+	if (feof(pFile) == 0)
 	{
 		printf_s("Ошибка чтения из файла!\n");
 		return;
 	}
 
+	// Вывод на матрицы на экран
+	for (int i = 0; i < m; i++) {
+		for (int j = 0; j < n; j++) {
+			printFraction(sleMatrix[i][j]);
+			printf_s(" ");
+		}
+		printf_s("\n");
+	}
+
+	printf_s("\n=======================\n\n");
+	tempRow = solveSle(sleMatrix, m, n, &solutionText);
+	printf_s("\n=======================\n\n");
+
+	printf_s("%s\n", solutionText);
+	if (tempRow != NULL) {
+		for (int i = 0; i < m; i++)
+		{
+			printf_s("%d", tempRow[i]);
+		}
+		printf_s("\n");
+	}
 	printf_s("\n");
 
 	// Очистка памяти
