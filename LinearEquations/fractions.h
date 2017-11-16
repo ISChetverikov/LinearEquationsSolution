@@ -10,6 +10,13 @@ typedef struct rational_fraction {
 	int denominator;
 } fraction;
 
+// Создание дроби
+// params:
+//     num   - числитель
+//     denom - знаменатель
+// return: дробь с заданными числителем и указателем
+fraction createFraction(int num, int denom);
+
 // Вывод дроби на экран консоли
 // params:
 //     operand - выводимая дробь

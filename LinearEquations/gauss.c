@@ -30,14 +30,12 @@ fraction * solveSle(fraction ** matrix, int m, int n, char ** outputText) {
 	// Создать конструкторы для дробей
 	for (int j = 0; j < n; j++)
 	{
-		bomb.numerator = 0;
-		bomb.denominator = 1;
+		bomb = createFraction(0,1);
 
 		int index = 0;
 		for (index = current_rank; index < m; index++) {
 			if (!isZero(tempMatrix[index][j])){
-				bomb.numerator = tempMatrix[index][j].numerator;
-				bomb.denominator = tempMatrix[index][j].denominator;
+				bomb = tempMatrix[index][j];
 			    break;
 		    }
 		}

@@ -3,6 +3,14 @@
 #include <stdlib.h>
 #include <string.h>
 
+fraction createFraction(int num, int denom) {
+	fraction result;
+	result.numerator = num;
+	result.denominator = denom;
+
+	return result;
+}
+
 void printFraction(fraction operand) {
 	if (operand.denominator == 1) {
 		printf_s("%d", operand.numerator);

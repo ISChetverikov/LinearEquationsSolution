@@ -88,7 +88,7 @@ int main() {
 	if (tempRow != NULL) {
 		for (int i = 0; i < m; i++)
 		{
-			printf_s("%d", tempRow[i]);
+			printFraction(tempRow[i]);
 		}
 		printf_s("\n");
 	}
