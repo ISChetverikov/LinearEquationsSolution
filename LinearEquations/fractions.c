@@ -9,6 +9,11 @@ void printFraction(fraction operand) {
 		return;
 	}
 
+	if (operand.denominator < 0) {
+		operand.numerator = -operand.numerator;
+		operand.denominator = -operand.denominator;
+	}
+
 	printf_s("%d/%d", operand.numerator, operand.denominator);
 	return;
 }
@@ -114,11 +119,6 @@ void reduce(fraction * operand) {
 	if (operand->numerator == 0) {
 		operand->denominator = 1;
 		return;
-	}
-
-	if (operand->denominator < 0) {
-		operand->numerator = -operand->numerator;
-		operand->denominator = -operand->denominator;
 	}
 
 	gcd = getGcd(operand->numerator, operand->denominator);

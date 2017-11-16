@@ -70,16 +70,7 @@ fraction * solveSle(fraction ** matrix, int m, int n, char ** outputText) {
 		current_rank++;
 	}
 	
-	for (int i = 0; i < m; i++) {
-		for (int j = 0; j < n; j++) {
-			printFraction(tempMatrix[i][j]);
-			printf_s(" ");
-		}
-			printf_s("\n");
-		}
-	printf_s("--------------\n");
-
-	*outputText = calloc(TEXT_LENGTH, sizeof(char));//Вынести в константу
+	*outputText = calloc(TEXT_LENGTH, sizeof(char));
 	sprintf_s(*outputText, TEXT_LENGTH, "Система неопределена. Ранг системы: %d", current_rank);
 
 	// Если ранг матрицы равен количеству переменных, то в результат помешаем единственное решение
@@ -111,6 +102,16 @@ fraction * solveSle(fraction ** matrix, int m, int n, char ** outputText) {
 			}				
 		}
 	}
+
+	 //Вывод матрицы на экран
+	for (int i = 0; i < m; i++) {
+		for (int j = 0; j < n; j++) {
+			printFraction(tempMatrix[i][j]);
+			printf_s(" ");
+		}
+		printf_s("\n");
+	}
+	printf_s("--------------\n");
 
 	// Очистка массива
 	for (int i = 0; i < m; i++)

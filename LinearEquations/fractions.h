@@ -66,5 +66,3 @@ void reduce(fraction * operand);
 //     operand - сравниваемая дробь
 // return: 1 - дробь равна нулю, 0 - в противном случае
 char isZero(fraction operand);
-
-int getGcd(int, int);
